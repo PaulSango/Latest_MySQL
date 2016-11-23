@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+
+  		if(sessionStorage.clickcount > 0){
+		            var newurl = "http://localhost:5050/dash";
+		                if(newurl!=window.location){
+		                     window.history.pushState({path:newurl},'',newurl);
+		                     window.location.reload();
+		                }
+		}
+
+		var counter;  	
+
+		$(document).ready(function(){
+		  $("#button").click(function(){
+
+		  		alert("True");
+
+		        $.ajax({
+		          url: 'http://localhost:5050/Accounts',
+		          dataType: 'json',
+		          type: 'get',		
+		          cache: false,
+
+		          success: function(data){
+		              counter = data.length;
+		              $(data).each(function(index, value){ 
+
+		                  var a = document.getElementById('EmailAddress').value;
+		                  var b = document.getElementById('Pass').value;
+		                  counter = data.length-1;
+
+		                  if(a == value.Email && b == value.Password){
+		                    document.location = "http://localhost:5050/Dash";
+		                    sessionStorage.clickcount = 1;
+		                    alert("Success");
+		                    return false;
+		                  }
+		                  else{
+		                    counter--;
+		                  }
+		              });
+			                if(counter == 0){
+			                    alert("Missing Credentials, Email or Password Error.");
+			                }
+		          }
+		        });
+
+		      });
+		});
+
+
+  </script>
+	</head>
+			<body>
+
+
+			<nav class="navbar navbar-inverse"> <!-- Header -->
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="http://localhost:5050/">I ♥ Pieyyouel</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li class="active"><a href="http://localhost:5050/">Greetings</a></li>
+			      <li class="active"><a href="http://localhost:5050/Index">Login</a></li>
+			      <li class="active"><a href="http://localhost:5050/Registration">Register</a></li>
+			    </ul>
+			  </div>
+			</nav>
+
+			<div class="container"> <!-- Article -->
+			  <form>
+			    <div class="form-group">
+			      <label for="usr">Email Address:</label>
+			      <input type="text" id="EmailAddress" placeholder="Email Address" class="form-control" required>
+			    </div>
+			    <div class="form-group">
+			      <label for="pwd">Password:</label>
+			      <input type="password" id="Pass" placeholder="Password" class="form-control" required><br>
+			    </div>
+			  </form>
+			</div>
+			<center><button id="button" type="button" class="btn btn-success">Sign-In</button>
+
+			</body>
+
+</html>

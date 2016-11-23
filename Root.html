@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+
+  		if(sessionStorage.clickcount > 0){
+		            var newurl = "http://localhost:5050/dash";
+		                if(newurl!=window.location){
+		                     window.history.pushState({path:newurl},'',newurl);
+		                     window.location.reload();
+		                }
+		}
+
+		var counter;  	
+
+		$(document).ready(function(){
+		  $("#button").click(function(){
+
+		  		alert("True");
+		  		
+		        $.ajax({
+		          url: 'http://localhost:5050/Accounts',
+		          dataType: 'json',
+		          type: 'get',		
+		          cache: false,
+
+		          success: function(data){
+		              counter = data.length;
+		              $(data).each(function(index, value){ 
+
+		                  var a = document.getElementById('EmailAddress').value;
+		                  var b = document.getElementById('Pass').value;
+		                  counter = data.length-1;
+
+		                  if(a == value.Email && b == value.Password){
+		                    document.location = "http://localhost:5050/Dash";
+		                    alert("Success");
+		                    return false;
+		                  }
+		                  else{
+		                    counter--;
+		                  }
+		              });
+			                if(counter == 0){
+			                    alert("Missing Credentials, Email or Password Error.");
+			                }
+		          }
+		        });
+
+		      });
+		});
+	
+		$(document).ready(function(){
+		  $("#button2").click(function(){	
+
+		  		var email = $("#EmailAddress").val();
+		  		var pass = $("#Pass").val();
+
+		          $.post("http://localhost:5050/signing-up",{email: email,password: pass}, function(data){
+		                
+		          });
+		          alert("Done");
+		          document.location = "http://localhost:5050/";
+
+
+		      });
+		});
+
+
+  </script>
+	</head>
+			<body>
+			<nav class="navbar navbar-inverse"> <!-- Header -->
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="http://localhost:5050/">I ♥ Pieyyouel</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li class="active"><a href="http://localhost:5050/">Greetings</a></li>
+			      <li class="active"><a href="http://localhost:5050/Index">Login</a></li>
+			      <li class="active"><a href="http://localhost:5050/Registration">Register</a></li>
+			    </ul>
+			  </div>
+			</nav>
+
+			<p> On this repository, It only discussed about how to operate MySQL and Nodejs. </p>
+
+			<p> Source: Professor Clyde Balaman</p>
+			<ul>
+			  <li><a href="https://www.electrictoolbox.com/autoincrement-value-mysql/">MySQL</a></li>
+			  <li><a href="https://www.npmjs.com/">Express</a></li>
+			  <li><a href="https://www.npmjs.com/">Body-Parser</a></li>
+			  <li><a href="https://www.npmjs.com/">Json-Server</a></li>
+			  <li><a href="https://www.npmjs.com/">Session</a></li>
+			</ul>
+			<p> Post and Get and more knowledges </p> 
+			<ol>
+			  <li><a href="https://www.youtube.com/watch?v=XuLRKMqozwA">Site 1</a></li>
+			  <li><a href="https://codeforgeek.com/2014/09/handle-get-post-request-express-4/">Site 2</a></li>
+			  <li><a href="https://github.com/alexbooker/code-cast-code/tree/master/node-mysql-demo">Site 3</a></li>
+			  <li><a href="https://gist.github.com/diorahman/1520485">Site 4</a></li>
+			</ol>
+
+			<h1> Do this before running the code </h1>
+			<p> On nodejs please do the following instructions </p>
+			<ol>
+			  <li>npm install</a></li>
+			  <li>npm start or node app.js</a></li>
+			</ol>
+
+			<h1> On database MySQL, Copy paste this.</h1>
+
+			<p>
+			SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";<br>
+			SET time_zone = "+00:00";<br>
+			<br>
+			CREATE TABLE IF NOT EXISTS `users` (<br>
+			  `Email` varchar(50) NOT NULL,<br>
+			  `Password` varchar(50) NOT NULL,<br>
+			  `ID` int(25) NOT NULL<br>
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1;<br>
+			<br>
+			INSERT INTO `users` (`Email`, `Password`, `ID`) VALUES<br>
+			('admin@gmail.com', 'admin123', 0),<br>
+			('pieyyouel@gmail.com', 'pieyyouel123', 1);<br>
+			<br>
+			ALTER TABLE `users`<br>
+			ADD PRIMARY KEY (`Email`); </p>
+
+			</body>
+</html>
