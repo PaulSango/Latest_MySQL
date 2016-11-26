@@ -60,6 +60,10 @@ app.get('/Acc2', function (req, res) {
     });
 
 app.get('/', function (req, res) {
+  res.sendFile(__dirname + "/Home.html")
+});
+
+app.get('/Root', function (req, res) {
   res.sendFile(__dirname + "/Root.html")
 });
 
