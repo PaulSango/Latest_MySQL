@@ -1,9 +1,14 @@
 var express = require('express');
+var exphbs  = require('express-handlebars');
 var mysql = require('mysql');
+var path = require('path');
 var app = express();
 var bodyParser = require("body-parser");
 var acc;
 var x;
+
+app.engine('handlebars', exphbs({defaultLayout: 'Main'}));
+app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -60,23 +65,23 @@ app.get('/Acc2', function (req, res) {
     });
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + "/Home.html")
+  res.render('Home');
 });
 
 app.get('/Root', function (req, res) {
-  res.sendFile(__dirname + "/Root.html")
+  res.render('Root');
 });
 
 app.get('/Index', function (req, res) {
-  res.sendFile(__dirname + "/Index.html")
+  res.render('Index');
 });
 
 app.get('/Registration', function (req, res) {
-  res.sendFile(__dirname + "/Registration.html")
+  res.render('Registration');
 });
 
 app.get('/Dash', function (req, res) {
-  res.sendFile(__dirname + "/Dash.html")
+  res.render('Dash');
 });
 
 app.post('/signing-up',function(req,res){
